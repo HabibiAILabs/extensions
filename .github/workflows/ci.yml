@@ -1,0 +1,26 @@
+name: Validate extensions
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: HabibiAssistant/habibi
+          path: habibi
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: habibi
+      - run: cargo build --manifest-path habibi/Cargo.toml
+      - name: Validate chat
+        run: HABIBI_EXTENSIONS_DIR="$RUNNER_TEMP/extensions" habibi/target/debug/habibi install . --subdir chat
