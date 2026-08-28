@@ -21,7 +21,7 @@ git clone https://github.com/HabibiAssistant/extensions.git
 habibi install ./extensions --subdir chat
 ```
 
-Habibi records the source URL, selected subdirectory, resolved Git revision, semantic version, content hash, capabilities, and installation timestamp. Check and apply updates from Habibi’s Extensions page or run:
+Habibi stages and automatically security/privacy scans every install and update before enabling it. It records the scan report, source URL, selected subdirectory, resolved Git revision, semantic version, content hash, capabilities, and installation timestamp. Check and apply updates from Habibi’s Extensions page or run:
 
 ```sh
 habibi update chat
