@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "extensions": [
+    {
+      "id": "chat",
+      "name": "Chat",
+      "version": "0.1.0",
+      "description": "Multi-session web chat over Habibi's durable event history.",
+      "source": "https://github.com/HabibiAssistant/extensions.git",
+      "subdir": "chat"
+    }
+  ]
+}
