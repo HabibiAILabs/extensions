@@ -4,8 +4,8 @@
     {
       "id": "chat",
       "name": "Chat",
-      "version": "0.1.0",
-      "description": "Multi-session web chat over Habibi's durable event history.",
+      "version": "0.2.0",
+      "description": "Multi-session web chat with owned context and tool-suggestion hooks.",
       "source": "https://github.com/HabibiAssistant/extensions.git",
       "subdir": "chat"
     }

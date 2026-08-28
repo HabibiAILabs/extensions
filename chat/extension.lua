@@ -336,16 +336,31 @@ habibi.tools.register({
   }
 end)
 
-habibi.reactions.context(function(trigger)
+habibi.context.register("chat.session-history", function(trigger)
   local session_id = trigger.payload.session_id
+  if not session_id then return { items = habibi.array({}) } end
   local messages = session_messages(session_id)
-  local context = habibi.array({})
-  local first = math.max(1, #messages - 39)
+  local items = habibi.array({})
+  local first = math.max(1, #messages - 40)
   for index = first, #messages do
-    table.insert(context, {
-      role = messages[index].role,
-      content = messages[index].content
-    })
+    if messages[index].event_id ~= trigger.id then
+      table.insert(items, {
+        type = "message",
+        role = messages[index].role,
+        content = messages[index].content,
+        source_event_id = messages[index].event_id
+      })
+    end
   end
-  return context
+  return { items = items }
+end)
+
+habibi.tools.suggest("chat.reply", function(trigger)
+  if trigger.event_type ~= "chat.session.started" and trigger.event_type ~= "chat.message.created" then
+    return habibi.array({})
+  end
+  return habibi.array({{
+    tool = "chat.send_message",
+    reason = "A user chat message normally requires a visible assistant reply."
+  }})
 end)

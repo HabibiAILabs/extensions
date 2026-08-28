@@ -31,7 +31,7 @@ habibi update chat
 
 | Extension | Version | Description |
 | --- | ---: | --- |
-| [`chat`](chat/) | `0.1.0` | Multi-session web chat over Habibi’s durable event history. |
+| [`chat`](chat/) | `0.2.0` | Multi-session web chat with owned context and tool-suggestion hooks. |
 
 ## Versioning and releases
 
