@@ -44,7 +44,7 @@
     {
       "id": "web-search",
       "name": "Web Search",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "description": "Search the public web through Brave or self-hosted SearXNG.",
       "source": "https://github.com/HabibiAssistant/extensions.git",
       "subdir": "web-search"
