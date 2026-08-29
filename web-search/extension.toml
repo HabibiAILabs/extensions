@@ -1,6 +1,6 @@
 id = "web-search"
 name = "Web Search"
-version = "0.1.4"
+version = "0.1.5"
 description = "Search the public web through a user-configured Brave or SearXNG provider."
 api_version = 2
 

@@ -32,8 +32,8 @@ suggestion so the model can search directly instead of first discovering the too
 Habibi after changing provider environment variables.
 
 `web-search.search` returns at most ten titles, destination URLs, and 1,000-character provider
-snippets. SearXNG `unresponsive_engines` entries are forwarded as sanitized `provider_errors`.
-Failures without results set `retryable=false`; the model is instructed not to repeat that search in
+snippets. SearXNG HTTP failures and `unresponsive_engines` entries are forwarded as sanitized
+`provider_errors`. Failures without results set `retryable=false`; the model is instructed not to repeat that search in
 the same reaction and to report the concrete suspension/CAPTCHA/timeout.
 Redirects and responses above 1 MiB are rejected. Provider selection is user-owned, not a model
 parameter. Queries are sent to the external provider and retained in Habibi action/model
