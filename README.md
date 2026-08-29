@@ -41,7 +41,7 @@ habibi update web-search
 
 | Extension | Version | Description |
 | --- | ---: | --- |
-| [`chat`](chat/) | `0.2.0` | Multi-session web chat with owned context and tool-suggestion hooks. |
+| [`chat`](chat/) | `0.2.1` | Multi-session web chat with owned context and tool-suggestion hooks. |
 | [`workspace`](workspace/) | `0.1.0` | Scoped file reading, search, and checked workspace mutations. |
 | [`process`](process/) | `0.1.1` | Granted native executables in bounded Linux sandboxes. |
 | [`git`](git/) | `0.1.0` | Read-only repository inspection through sandboxed Git. |
@@ -61,6 +61,7 @@ Official releases use extension-scoped tags:
 ```text
 chat-v0.1.0
 chat-v0.2.0
+chat-v0.2.1
 workspace-v0.1.0
 process-v0.1.0
 process-v0.1.1

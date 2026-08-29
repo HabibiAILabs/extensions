@@ -329,6 +329,7 @@ habibi.tools.register({
   local message_id = habibi.id()
   return {
     result = { sent = true, session_id = session_id, message_id = message_id },
+    settle = true,
     events = {{
       type = "chat.message.created",
       payload = { session_id = session_id, message_id = message_id, role = "assistant", content = arguments.content }
