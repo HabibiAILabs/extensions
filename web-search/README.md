@@ -27,7 +27,9 @@ SearXNG must be an explicitly configured HTTPS origin or loopback HTTP service w
 enabled. No public instance is configured automatically.
 
 Until one provider is configured, the extension stays enabled but registers no model tool, avoiding
-an unusable tool definition. Reload or restart Habibi after changing provider environment variables.
+an unusable tool definition. Once configured, user chat events receive a lightweight search
+suggestion so the model can search directly instead of first discovering the tool. Reload or restart
+Habibi after changing provider environment variables.
 
 `web-search.search` returns at most ten titles, destination URLs, and 1,000-character provider
 snippets. Redirects and responses above 1 MiB are rejected. Provider selection is user-owned, not a
