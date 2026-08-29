@@ -317,11 +317,12 @@ habibi.tools.register({
   description = "Send a message to the user in an explicitly identified chat session. Use this tool for every user-visible response.",
   input_schema = {
     type = "object",
-    properties = { session_id = { type = "string" }, content = { type = "string" } },
+    properties = { session_id = { type = "string", description = "Use 'current' for the session that triggered this reaction, or an exact session ID." }, content = { type = "string" } },
     required = { "session_id", "content" }
   }
-}, function(arguments, _context)
+}, function(arguments, context)
   local session_id = arguments.session_id
+  if session_id == "current" then session_id = context.trigger.payload.session_id end
   local session = session_id and find_session(session_id) or nil
   if not session then error("chat session not found") end
   if session.archived then error("chat session has been removed") end
@@ -362,6 +363,6 @@ habibi.tools.suggest("chat.reply", function(trigger)
   end
   return habibi.array({{
     tool = "chat.send_message",
-    reason = "A user chat message normally requires a visible assistant reply."
+    reason = "Reply to the triggering chat with session_id 'current'."
   }})
 end)
