@@ -26,6 +26,9 @@ HABIBI_SEARXNG_URL=http://127.0.0.1:8080
 SearXNG must be an explicitly configured HTTPS origin or loopback HTTP service with JSON output
 enabled. No public instance is configured automatically.
 
+Until one provider is configured, the extension stays enabled but registers no model tool, avoiding
+an unusable tool definition. Reload or restart Habibi after changing provider environment variables.
+
 `web-search.search` returns at most ten titles, destination URLs, and 1,000-character provider
 snippets. Redirects and responses above 1 MiB are rejected. Provider selection is user-owned, not a
 model parameter. Queries are sent to the external provider and retained in Habibi action/model
