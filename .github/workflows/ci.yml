@@ -28,3 +28,9 @@ jobs:
         run: HABIBI_EXTENSIONS_DIR="$RUNNER_TEMP/extensions" habibi/target/debug/habibi install . --subdir workspace
       - name: Validate process
         run: HABIBI_EXTENSIONS_DIR="$RUNNER_TEMP/extensions" habibi/target/debug/habibi install . --subdir process
+      - name: Validate git
+        run: HABIBI_EXTENSIONS_DIR="$RUNNER_TEMP/extensions" habibi/target/debug/habibi install . --subdir git
+      - name: Validate Extension Studio
+        run: HABIBI_EXTENSIONS_DIR="$RUNNER_TEMP/extensions" HABIBI_EXTENSION_DRAFTS_DIR="$RUNNER_TEMP/drafts" habibi/target/debug/habibi install . --subdir extension-studio
+      - name: Validate web search
+        run: HABIBI_EXTENSIONS_DIR="$RUNNER_TEMP/extensions" habibi/target/debug/habibi install . --subdir web-search

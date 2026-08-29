@@ -1,0 +1,10 @@
+id = "git"
+name = "Git"
+version = "0.1.0"
+description = "Read repository status, diffs, history, and objects through sandboxed Git."
+api_version = 2
+
+[capabilities]
+tools = true
+filesystem = true
+process = true

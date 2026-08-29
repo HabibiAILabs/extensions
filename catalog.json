@@ -20,10 +20,34 @@
     {
       "id": "process",
       "name": "Process",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Run explicitly granted native executables in bounded Linux sandboxes.",
       "source": "https://github.com/HabibiAssistant/extensions.git",
       "subdir": "process"
+    },
+    {
+      "id": "git",
+      "name": "Git",
+      "version": "0.1.0",
+      "description": "Read repository status, diffs, history, and objects through sandboxed Git.",
+      "source": "https://github.com/HabibiAssistant/extensions.git",
+      "subdir": "git"
+    },
+    {
+      "id": "extension-studio",
+      "name": "Extension Studio",
+      "version": "0.1.0",
+      "description": "Create, edit, and validate isolated extension drafts.",
+      "source": "https://github.com/HabibiAssistant/extensions.git",
+      "subdir": "extension-studio"
+    },
+    {
+      "id": "web-search",
+      "name": "Web Search",
+      "version": "0.1.0",
+      "description": "Search the public web through Brave or self-hosted SearXNG.",
+      "source": "https://github.com/HabibiAssistant/extensions.git",
+      "subdir": "web-search"
     }
   ]
 }

@@ -14,6 +14,9 @@ Install directly from GitHub:
 habibi install https://github.com/HabibiAssistant/extensions.git --subdir chat
 habibi install https://github.com/HabibiAssistant/extensions.git --subdir workspace
 habibi install https://github.com/HabibiAssistant/extensions.git --subdir process
+habibi install https://github.com/HabibiAssistant/extensions.git --subdir git
+habibi install https://github.com/HabibiAssistant/extensions.git --subdir extension-studio
+habibi install https://github.com/HabibiAssistant/extensions.git --subdir web-search
 ```
 
 Or install from a local checkout while developing:
@@ -29,6 +32,9 @@ Habibi stages and automatically security/privacy scans every install and update 
 habibi update chat
 habibi update workspace
 habibi update process
+habibi update git
+habibi update extension-studio
+habibi update web-search
 ```
 
 ## Extensions
@@ -37,7 +43,10 @@ habibi update process
 | --- | ---: | --- |
 | [`chat`](chat/) | `0.2.0` | Multi-session web chat with owned context and tool-suggestion hooks. |
 | [`workspace`](workspace/) | `0.1.0` | Scoped file reading, search, and checked workspace mutations. |
-| [`process`](process/) | `0.1.0` | Granted native executables in bounded Linux sandboxes. |
+| [`process`](process/) | `0.1.1` | Granted native executables in bounded Linux sandboxes. |
+| [`git`](git/) | `0.1.0` | Read-only repository inspection through sandboxed Git. |
+| [`extension-studio`](extension-studio/) | `0.1.0` | Scoped extension draft authoring and validation. |
+| [`web-search`](web-search/) | `0.1.0` | Brave or self-hosted SearXNG public-web discovery. |
 
 Workspace starts with no filesystem access. After installation, grant one or more existing absolute
 directories from Habibi's Extensions page. Existing-file writes and patches require the SHA-256
@@ -54,6 +63,10 @@ chat-v0.1.0
 chat-v0.2.0
 workspace-v0.1.0
 process-v0.1.0
+process-v0.1.1
+git-v0.1.0
+extension-studio-v0.1.0
+web-search-v0.1.0
 ```
 
 A repository commit may update several extensions independently. Installations remain reproducible because Habibi records both the extension version and exact Git commit.
@@ -70,6 +83,15 @@ extensions/
     extension.toml
     extension.lua
   process/
+    extension.toml
+    extension.lua
+  git/
+    extension.toml
+    extension.lua
+  extension-studio/
+    extension.toml
+    extension.lua
+  web-search/
     extension.toml
     extension.lua
 ```
