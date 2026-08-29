@@ -24,3 +24,5 @@ jobs:
       - run: cargo build --manifest-path habibi/Cargo.toml
       - name: Validate chat
         run: HABIBI_EXTENSIONS_DIR="$RUNNER_TEMP/extensions" habibi/target/debug/habibi install . --subdir chat
+      - name: Validate workspace
+        run: HABIBI_EXTENSIONS_DIR="$RUNNER_TEMP/extensions" habibi/target/debug/habibi install . --subdir workspace

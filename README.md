@@ -25,6 +25,7 @@ Habibi stages and automatically security/privacy scans every install and update 
 
 ```sh
 habibi update chat
+habibi update workspace
 ```
 
 ## Extensions
@@ -32,6 +33,11 @@ habibi update chat
 | Extension | Version | Description |
 | --- | ---: | --- |
 | [`chat`](chat/) | `0.2.0` | Multi-session web chat with owned context and tool-suggestion hooks. |
+| [`workspace`](workspace/) | `0.1.0` | Scoped file reading, search, and checked workspace mutations. |
+
+Workspace starts with no filesystem access. After installation, grant one or more existing absolute
+directories from Habibi's Extensions page. Existing-file writes and patches require the SHA-256
+returned by `workspace.read`; deletion is nonrecursive.
 
 ## Versioning and releases
 
@@ -42,6 +48,7 @@ Official releases use extension-scoped tags:
 ```text
 chat-v0.1.0
 chat-v0.2.0
+workspace-v0.1.0
 ```
 
 A repository commit may update several extensions independently. Installations remain reproducible because Habibi records both the extension version and exact Git commit.
@@ -54,6 +61,9 @@ extensions/
     extension.toml
     extension.lua
     web/
+  workspace/
+    extension.toml
+    extension.lua
 ```
 
 Extensions must not use install scripts or symbolic links. Runtime capabilities are declared explicitly in `extension.toml` and are shown before or during management operations.
@@ -64,6 +74,7 @@ Run Habibi against a disposable extensions directory, install the local package,
 
 ```sh
 HABIBI_EXTENSIONS_DIR=/tmp/habibi-extensions habibi install . --subdir chat
+HABIBI_EXTENSIONS_DIR=/tmp/habibi-extensions habibi install . --subdir workspace
 ```
 
 See the [extension authoring documentation](https://github.com/HabibiAssistant/habibi/blob/main/docs/extensions.md) in the main repository.

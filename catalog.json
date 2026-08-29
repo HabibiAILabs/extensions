@@ -8,6 +8,14 @@
       "description": "Multi-session web chat with owned context and tool-suggestion hooks.",
       "source": "https://github.com/HabibiAssistant/extensions.git",
       "subdir": "chat"
+    },
+    {
+      "id": "workspace",
+      "name": "Workspace",
+      "version": "0.1.0",
+      "description": "Scoped file reading, search, and checked workspace mutations.",
+      "source": "https://github.com/HabibiAssistant/extensions.git",
+      "subdir": "workspace"
     }
   ]
 }
