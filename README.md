@@ -12,6 +12,8 @@ Install directly from GitHub:
 
 ```sh
 habibi install https://github.com/HabibiAssistant/extensions.git --subdir chat
+habibi install https://github.com/HabibiAssistant/extensions.git --subdir workspace
+habibi install https://github.com/HabibiAssistant/extensions.git --subdir process
 ```
 
 Or install from a local checkout while developing:
@@ -26,6 +28,7 @@ Habibi stages and automatically security/privacy scans every install and update 
 ```sh
 habibi update chat
 habibi update workspace
+habibi update process
 ```
 
 ## Extensions
@@ -34,6 +37,7 @@ habibi update workspace
 | --- | ---: | --- |
 | [`chat`](chat/) | `0.2.0` | Multi-session web chat with owned context and tool-suggestion hooks. |
 | [`workspace`](workspace/) | `0.1.0` | Scoped file reading, search, and checked workspace mutations. |
+| [`process`](process/) | `0.1.0` | Granted native executables in bounded Linux sandboxes. |
 
 Workspace starts with no filesystem access. After installation, grant one or more existing absolute
 directories from Habibi's Extensions page. Existing-file writes and patches require the SHA-256
@@ -49,6 +53,7 @@ Official releases use extension-scoped tags:
 chat-v0.1.0
 chat-v0.2.0
 workspace-v0.1.0
+process-v0.1.0
 ```
 
 A repository commit may update several extensions independently. Installations remain reproducible because Habibi records both the extension version and exact Git commit.
@@ -62,6 +67,9 @@ extensions/
     extension.lua
     web/
   workspace/
+    extension.toml
+    extension.lua
+  process/
     extension.toml
     extension.lua
 ```

@@ -1,0 +1,10 @@
+id = "process"
+name = "Process"
+version = "0.1.0"
+description = "Run explicitly granted native executables in bounded Linux sandboxes."
+api_version = 2
+
+[capabilities]
+tools = true
+filesystem = true
+process = true

@@ -26,3 +26,5 @@ jobs:
         run: HABIBI_EXTENSIONS_DIR="$RUNNER_TEMP/extensions" habibi/target/debug/habibi install . --subdir chat
       - name: Validate workspace
         run: HABIBI_EXTENSIONS_DIR="$RUNNER_TEMP/extensions" habibi/target/debug/habibi install . --subdir workspace
+      - name: Validate process
+        run: HABIBI_EXTENSIONS_DIR="$RUNNER_TEMP/extensions" habibi/target/debug/habibi install . --subdir process

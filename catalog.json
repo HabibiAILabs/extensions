@@ -16,6 +16,14 @@
       "description": "Scoped file reading, search, and checked workspace mutations.",
       "source": "https://github.com/HabibiAssistant/extensions.git",
       "subdir": "workspace"
+    },
+    {
+      "id": "process",
+      "name": "Process",
+      "version": "0.1.0",
+      "description": "Run explicitly granted native executables in bounded Linux sandboxes.",
+      "source": "https://github.com/HabibiAssistant/extensions.git",
+      "subdir": "process"
     }
   ]
 }
