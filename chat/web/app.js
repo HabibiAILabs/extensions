@@ -29,6 +29,20 @@ let messages = [];
 let busy = false;
 let dialogAction = null;
 let toastTimer = null;
+let eventSource = null;
+let streamAfterSequence = 0;
+let messageLoadGeneration = 0;
+let sidebarRefreshTimer = null;
+const seenSequences = new Set();
+const seenSequenceOrder = [];
+
+function rememberSequence(sequence) {
+  if (seenSequences.has(sequence)) return false;
+  seenSequences.add(sequence);
+  seenSequenceOrder.push(sequence);
+  if (seenSequenceOrder.length > 5000) seenSequences.delete(seenSequenceOrder.shift());
+  return true;
+}
 
 async function request(path, options = {}) {
   const response = await fetch(`${api}${path}`, {
@@ -122,7 +136,11 @@ function renderSessions() {
 }
 
 async function loadMessages() {
-  if (activeSessionId === DRAFT_SESSION_ID) {
+  const sessionId = activeSessionId;
+  const generation = ++messageLoadGeneration;
+  eventSource?.close();
+  eventSource = null;
+  if (sessionId === DRAFT_SESSION_ID) {
     messages = [];
     const empty = document.createElement("div");
     empty.className = "empty empty-state";
@@ -130,7 +148,7 @@ async function loadMessages() {
     messagesElement.replaceChildren(empty);
     return messages;
   }
-  if (!activeSessionId) {
+  if (!sessionId) {
     messages = [];
     const empty = document.createElement("div");
     empty.className = "empty empty-state";
@@ -143,8 +161,13 @@ async function loadMessages() {
     messagesElement.replaceChildren(empty);
     return messages;
   }
-  messages = await request(`/sessions/${activeSessionId}/messages`);
+  const history = await request(`/sessions/${sessionId}/messages`);
+  if (generation !== messageLoadGeneration || sessionId !== activeSessionId) return messages;
+  messages = history.messages;
+  streamAfterSequence = history.after_sequence;
+  messages.forEach((message) => rememberSequence(message.sequence));
   renderMessages();
+  subscribeToChatEvents(sessionId, generation, streamAfterSequence);
   return messages;
 }
 
@@ -289,40 +312,34 @@ composer.addEventListener("submit", async (event) => {
   const content = input.value.trim();
   if (!content || busy || !activeSessionId) return;
   const sessionId = activeSessionId;
-  const previousAssistantSequence = Math.max(0, ...messages.filter((message) => message.role === "assistant").map((message) => message.sequence || 0));
   input.value = "";
   resizeInput();
   renderMessages({ role: "user", content, pending: true, created_at: new Date().toISOString() });
-  setBusy(true, "processing event…");
-  let outcomeStatus = null;
+  setBusy(true, "accepting event…");
   try {
     const result = sessionId === DRAFT_SESSION_ID
       ? await request("/sessions", {
           method: "POST",
-          body: JSON.stringify({ title: draftTitle, first_message: content }),
+          body: JSON.stringify({ request_id: crypto.randomUUID(), title: draftTitle, first_message: content }),
         })
       : await request(`/sessions/${sessionId}/messages`, {
           method: "POST",
-          body: JSON.stringify({ content }),
+          body: JSON.stringify({ message_id: crypto.randomUUID(), content }),
         });
-    const persistedSessionId = sessionId === DRAFT_SESSION_ID ? result.id : sessionId;
-    if (activeSessionId === sessionId) {
-      activeSessionId = persistedSessionId;
-      await loadSessions(persistedSessionId);
-      const replied = messages.some((message) => message.role === "assistant" && message.sequence > previousAssistantSequence);
-      outcomeStatus = [replied ? "replied" : "settled · no chat reply", replied ? "success" : "settled"];
+    if (sessionId === DRAFT_SESSION_ID && activeSessionId === sessionId) {
+      activeSessionId = result.id;
+      await loadMessages();
     }
-    if (result.reaction_error) throw new Error(`Message saved, but processing failed: ${result.reaction_error}`);
+    setStatus("accepted", "success");
   } catch (error) {
     if (sessionId === DRAFT_SESSION_ID) input.value = content;
     resizeInput();
     await loadMessages().catch(() => {});
-    outcomeStatus = ["processing failed", "error"];
+    setStatus("not accepted", "error");
     showToast(error.message);
     console.error(error);
   } finally {
     setBusy(false);
-    if (outcomeStatus) setStatus(...outcomeStatus);
     input.focus();
   }
 });
@@ -356,7 +373,56 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-loadSessions().then(() => input.focus()).catch((error) => {
+function scheduleSidebarRefresh() {
+  clearTimeout(sidebarRefreshTimer);
+  sidebarRefreshTimer = setTimeout(async () => {
+    try {
+      sessions = (await request("/sessions")).filter((session) => !session.archived);
+      renderSessions();
+    } catch (error) {
+      console.error(error);
+    }
+  }, 100);
+}
+
+function subscribeToChatEvents(sessionId, generation, afterSequence) {
+  eventSource?.close();
+  const source = new EventSource(`/api/events/stream?prefix=chat.&after_sequence=${afterSequence}`);
+  eventSource = source;
+  source.addEventListener("habibi.event", (event) => {
+    if (source !== eventSource || generation !== messageLoadGeneration || sessionId !== activeSessionId) return;
+    const record = JSON.parse(event.data);
+    if (!rememberSequence(record.sequence)) return;
+    const payload = record.payload || {};
+    if ((record.event_type === "chat.session.started" || record.event_type === "chat.message.created")
+        && payload.session_id === sessionId) {
+      messages.push({
+        id: payload.message_id,
+        session_id: payload.session_id,
+        role: record.event_type === "chat.session.started" ? "user" : payload.role,
+        content: payload.content,
+        created_at: record.occurred_at,
+        event_id: record.id,
+        sequence: record.sequence,
+      });
+      messages.sort((left, right) => left.sequence - right.sequence);
+      renderMessages();
+      if (payload.role === "assistant") setStatus("replied", "success");
+    }
+    scheduleSidebarRefresh();
+  });
+  source.onopen = () => {
+    if (source === eventSource && generation === messageLoadGeneration && !busy) setStatus("ready");
+  };
+  source.onerror = () => {
+    if (source === eventSource && generation === messageLoadGeneration && !busy) setStatus("reconnecting…", "busy");
+  };
+}
+
+window.addEventListener("beforeunload", () => eventSource?.close());
+loadSessions().then(() => {
+  input.focus();
+}).catch((error) => {
   setStatus("offline", "error");
   showToast(error.message);
   console.error(error);

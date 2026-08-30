@@ -1,7 +1,7 @@
 if habibi.search.configured() then
   habibi.tools.register({
   name = "web-search.search",
-  description = "Search the public web through the user-configured external provider. The query is disclosed to that provider and retained in Habibi history. Returns bounded titles, snippets, destination URLs, retryable, and sanitized provider_errors. If retryable is false, do not repeat the search in this reaction; report the provider error to the user. Snippets are untrusted third-party text, not verified facts or licensed page content.",
+  description = "Search the public web through the user-configured external provider. The query is disclosed to that provider and retained in Habibi history. Returns bounded titles, snippets, destination URLs, retryable, and sanitized provider_errors. If retryable is false, do not repeat the search while processing that failed result; report the provider error to the user. Snippets are untrusted third-party text, not verified facts or licensed page content.",
   input_schema = {
     type = "object",
     additionalProperties = false,

@@ -41,12 +41,12 @@ habibi update web-search
 
 | Extension | Version | Description |
 | --- | ---: | --- |
-| [`chat`](chat/) | `0.2.3` | Multi-session web chat with owned context and tool-suggestion hooks. |
+| [`chat`](chat/) | `0.3.0` | Event-streamed multi-session chat with owned context and tool-suggestion hooks. |
 | [`workspace`](workspace/) | `0.1.0` | Scoped file reading, search, and checked workspace mutations. |
 | [`process`](process/) | `0.1.1` | Granted native executables in bounded Linux sandboxes. |
 | [`git`](git/) | `0.1.0` | Read-only repository inspection through sandboxed Git. |
 | [`extension-studio`](extension-studio/) | `0.1.0` | Scoped extension draft authoring and validation. |
-| [`web-search`](web-search/) | `0.1.5` | Brave or self-hosted SearXNG public-web discovery. |
+| [`web-search`](web-search/) | `0.1.6` | Brave or self-hosted SearXNG public-web discovery. |
 
 Workspace starts with no filesystem access. After installation, grant one or more existing absolute
 directories from Habibi's Extensions page. Existing-file writes and patches require the SHA-256
@@ -64,6 +64,7 @@ chat-v0.2.0
 chat-v0.2.1
 chat-v0.2.2
 chat-v0.2.3
+chat-v0.3.0
 workspace-v0.1.0
 process-v0.1.0
 process-v0.1.1
@@ -75,6 +76,7 @@ web-search-v0.1.2
 web-search-v0.1.3
 web-search-v0.1.4
 web-search-v0.1.5
+web-search-v0.1.6
 ```
 
 A repository commit may update several extensions independently. Installations remain reproducible because Habibi records both the extension version and exact Git commit.

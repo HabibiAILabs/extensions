@@ -130,7 +130,10 @@ end)
 habibi.web.route("POST", "/api/sessions", function(request)
   local body = object_body(request)
   if not body then return error_response(400, "request body must be a JSON object") end
-  local session_id = habibi.id()
+  if type(body.request_id) ~= "string" or body.request_id == "" then
+    return error_response(400, "request_id is required")
+  end
+  local session_id = body.request_id
   local title = session_title(body.title or "New conversation")
   if not title then return error_response(400, "title must be between 1 and 120 characters") end
   local first_message = body.first_message
@@ -143,6 +146,7 @@ habibi.web.route("POST", "/api/sessions", function(request)
       json = { id = session_id, title = title },
       emit = {
         type = "chat.session.started",
+        idempotency_key = body.request_id,
         payload = {
           session_id = session_id, title = title,
           message_id = habibi.id(), role = "user", content = first_message
@@ -155,6 +159,7 @@ habibi.web.route("POST", "/api/sessions", function(request)
     json = { id = session_id, title = title },
     emit = {
       type = "chat.session.created",
+      idempotency_key = body.request_id,
       payload = { session_id = session_id, title = title }
     }
   }
@@ -206,7 +211,9 @@ end)
 habibi.web.route("GET", "/api/sessions/:session_id/messages", function(request)
   local session_id = request.path_params.session_id
   if not find_session(session_id) then return error_response(404, "session not found") end
-  return { status = 200, json = session_messages(session_id) }
+  local latest = habibi.events.query({ limit = 1 })
+  local after_sequence = #latest == 1 and latest[1].sequence or 0
+  return { status = 200, json = { messages = session_messages(session_id), after_sequence = after_sequence } }
 end)
 
 habibi.web.route("POST", "/api/sessions/:session_id/messages", function(request)
@@ -220,15 +227,19 @@ habibi.web.route("POST", "/api/sessions/:session_id/messages", function(request)
   if type(content) ~= "string" or content:match("^%s*$") then
     return error_response(400, "content must be a non-empty string")
   end
+  if type(body.message_id) ~= "string" or body.message_id == "" then
+    return error_response(400, "message_id is required")
+  end
 
   return {
     status = 201,
     json = { session_id = session_id },
     emit = {
       type = "chat.message.created",
+      idempotency_key = body.message_id,
       payload = {
         session_id = session_id,
-        message_id = habibi.id(),
+        message_id = body.message_id,
         role = "user",
         content = content
       }
@@ -317,12 +328,23 @@ habibi.tools.register({
   description = "Send a message to the user in an explicitly identified chat session. Use this tool for every user-visible response.",
   input_schema = {
     type = "object",
-    properties = { session_id = { type = "string", description = "Use 'current' for the session that triggered this reaction, or an exact session ID." }, content = { type = "string" } },
+    properties = { session_id = { type = "string", description = "Use 'current' for the session in the current event, or an exact session ID." }, content = { type = "string" } },
     required = { "session_id", "content" }
   }
 }, function(arguments, context)
   local session_id = arguments.session_id
-  if session_id == "current" then session_id = context.trigger.payload.session_id end
+  if session_id == "current" then
+    session_id = context.current_event.payload.session_id
+    if not session_id then
+      local correlated = habibi.events.query({ prefix = "chat.", correlation_id = context.correlation_id, limit = 100 })
+      for index = #correlated, 1, -1 do
+        if correlated[index].payload and correlated[index].payload.session_id then
+          session_id = correlated[index].payload.session_id
+          break
+        end
+      end
+    end
+  end
   local session = session_id and find_session(session_id) or nil
   if not session then error("chat session not found") end
   if session.archived then error("chat session has been removed") end
@@ -330,7 +352,6 @@ habibi.tools.register({
   local message_id = habibi.id()
   return {
     result = { sent = true, session_id = session_id, message_id = message_id },
-    settle = true,
     events = {{
       type = "chat.message.created",
       payload = { session_id = session_id, message_id = message_id, role = "assistant", content = arguments.content }
