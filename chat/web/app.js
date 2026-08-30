@@ -36,6 +36,16 @@ let sidebarRefreshTimer = null;
 const seenSequences = new Set();
 const seenSequenceOrder = [];
 
+function randomId() {
+  if (typeof globalThis.crypto?.randomUUID === "function") return globalThis.crypto.randomUUID();
+  const bytes = new Uint8Array(16);
+  globalThis.crypto.getRandomValues(bytes);
+  bytes[6] = (bytes[6] & 0x0f) | 0x40;
+  bytes[8] = (bytes[8] & 0x3f) | 0x80;
+  const hex = [...bytes].map((byte) => byte.toString(16).padStart(2, "0"));
+  return `${hex.slice(0, 4).join("")}-${hex.slice(4, 6).join("")}-${hex.slice(6, 8).join("")}-${hex.slice(8, 10).join("")}-${hex.slice(10).join("")}`;
+}
+
 function rememberSequence(sequence) {
   if (seenSequences.has(sequence)) return false;
   seenSequences.add(sequence);
@@ -320,11 +330,11 @@ composer.addEventListener("submit", async (event) => {
     const result = sessionId === DRAFT_SESSION_ID
       ? await request("/sessions", {
           method: "POST",
-          body: JSON.stringify({ request_id: crypto.randomUUID(), title: draftTitle, first_message: content }),
+          body: JSON.stringify({ request_id: randomId(), title: draftTitle, first_message: content }),
         })
       : await request(`/sessions/${sessionId}/messages`, {
           method: "POST",
-          body: JSON.stringify({ message_id: crypto.randomUUID(), content }),
+          body: JSON.stringify({ message_id: randomId(), content }),
         });
     if (sessionId === DRAFT_SESSION_ID && activeSessionId === sessionId) {
       activeSessionId = result.id;

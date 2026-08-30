@@ -4,7 +4,7 @@
     {
       "id": "chat",
       "name": "Chat",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "description": "Multi-session web chat with owned context and tool-suggestion hooks.",
       "source": "https://github.com/HabibiAssistant/extensions.git",
       "subdir": "chat"
