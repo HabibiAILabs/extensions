@@ -20,6 +20,10 @@ const dialogNameLabel = $("#dialog-name-label");
 const dialogName = $("#dialog-name");
 const dialogConfirm = $("#dialog-confirm");
 const toast = $("#toast");
+const replyTargetElement = $("#reply-target");
+const replyTargetRole = $("#reply-target-role");
+const replyTargetContent = $("#reply-target-content");
+const cancelReplyButton = $("#cancel-reply");
 
 const DRAFT_SESSION_ID = "__draft_session__";
 let sessions = [];
@@ -33,6 +37,7 @@ let eventSource = null;
 let streamAfterSequence = 0;
 let messageLoadGeneration = 0;
 let sidebarRefreshTimer = null;
+let replyTarget = null;
 const seenSequences = new Set();
 const seenSequenceOrder = [];
 
@@ -84,6 +89,14 @@ function showToast(message) {
   toast.textContent = message;
   toast.hidden = false;
   toastTimer = setTimeout(() => { toast.hidden = true; }, 4200);
+}
+
+function setReplyTarget(message = null) {
+  replyTarget = message;
+  replyTargetElement.hidden = !message;
+  if (!message) return;
+  replyTargetRole.textContent = `Replying to ${message.role === "assistant" ? "Habibi" : "you"}`;
+  replyTargetContent.textContent = message.content;
 }
 
 async function loadSessions(preferredId) {
@@ -146,6 +159,7 @@ function renderSessions() {
 }
 
 async function loadMessages() {
+  setReplyTarget();
   const sessionId = activeSessionId;
   const generation = ++messageLoadGeneration;
   eventSource?.close();
@@ -197,12 +211,22 @@ function renderMessages(extraMessage) {
 function renderMessage(message) {
   const article = document.createElement("article");
   article.className = `message ${message.role}${message.pending ? " pending" : ""}`;
+  if (message.event_id) article.dataset.eventId = message.event_id;
   const heading = document.createElement("div");
   heading.className = "message-heading";
   const role = document.createElement("span");
   role.className = "role";
   role.textContent = message.role === "assistant" ? "Habibi" : "You";
   heading.append(role);
+  if (message.event_id && !message.pending) {
+    const reply = document.createElement("button");
+    reply.type = "button";
+    reply.className = "message-reply";
+    reply.textContent = "Reply";
+    reply.setAttribute("aria-label", `Reply to ${message.role === "assistant" ? "Habibi" : "your message"}`);
+    reply.onclick = () => { setReplyTarget(message); input.focus(); };
+    heading.append(reply);
+  }
   if (message.created_at) {
     const time = document.createElement("time");
     time.dateTime = message.created_at;
@@ -212,12 +236,27 @@ function renderMessage(message) {
   const content = document.createElement("div");
   content.className = "content";
   content.textContent = message.content;
-  article.append(heading, content);
+  article.append(heading);
+  const parent = message.in_reply_to_event_id && messages.find(candidate => candidate.event_id === message.in_reply_to_event_id);
+  if (parent) {
+    const reference = document.createElement("button");
+    reference.type = "button";
+    reference.className = "reply-reference";
+    reference.textContent = `↳ ${parent.role === "assistant" ? "Habibi" : "You"}: ${parent.content}`;
+    reference.onclick = () => {
+      const target = messagesElement.querySelector(`[data-event-id="${CSS.escape(parent.event_id)}"]`);
+      target?.scrollIntoView({ behavior: "smooth", block: "center" });
+      target?.animate([{ outline: "1px solid var(--accent)" }, { outline: "1px solid transparent" }], { duration: 900 });
+    };
+    article.append(reference);
+  }
+  article.append(content);
   return article;
 }
 
 function startNewConversation() {
   if (busy) return;
+  setReplyTarget();
   draftTitle = "New conversation";
   activeSessionId = DRAFT_SESSION_ID;
   searchInput.value = "";
@@ -312,6 +351,7 @@ async function completeDialog() {
 newSessionButton.onclick = startNewConversation;
 renameTitleButton.onclick = () => openRenameDialog();
 deleteSessionButton.onclick = openDeleteDialog;
+cancelReplyButton.onclick = () => { setReplyTarget(); input.focus(); };
 $("#dialog-cancel").onclick = () => dialog.close();
 dialogForm.addEventListener("submit", (event) => { event.preventDefault(); completeDialog(); });
 searchInput.addEventListener("input", renderSessions);
@@ -322,9 +362,10 @@ composer.addEventListener("submit", async (event) => {
   const content = input.value.trim();
   if (!content || busy || !activeSessionId) return;
   const sessionId = activeSessionId;
+  const replyToEventId = replyTarget?.event_id || null;
   input.value = "";
   resizeInput();
-  renderMessages({ role: "user", content, pending: true, created_at: new Date().toISOString() });
+  renderMessages({ role: "user", content, pending: true, created_at: new Date().toISOString(), in_reply_to_event_id: replyToEventId });
   setBusy(true, "accepting event…");
   try {
     const result = sessionId === DRAFT_SESSION_ID
@@ -334,8 +375,9 @@ composer.addEventListener("submit", async (event) => {
         })
       : await request(`/sessions/${sessionId}/messages`, {
           method: "POST",
-          body: JSON.stringify({ message_id: randomId(), content }),
+          body: JSON.stringify({ message_id: randomId(), content, ...(replyToEventId ? { reply_to_event_id: replyToEventId } : {}) }),
         });
+    setReplyTarget();
     if (sessionId === DRAFT_SESSION_ID && activeSessionId === sessionId) {
       activeSessionId = result.id;
       await loadMessages();
@@ -414,6 +456,7 @@ function subscribeToChatEvents(sessionId, generation, afterSequence) {
         created_at: record.occurred_at,
         event_id: record.id,
         sequence: record.sequence,
+        in_reply_to_event_id: payload.in_reply_to_event_id,
       });
       messages.sort((left, right) => left.sequence - right.sequence);
       renderMessages();

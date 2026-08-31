@@ -104,6 +104,10 @@ local function message_events()
   return events
 end
 
+local function message_role(event)
+  return event.event_type == "chat.session.started" and "user" or (event.payload or {}).role
+end
+
 local function session_messages(session_id)
   local messages = habibi.array({})
   for _, event in ipairs(message_events()) do
@@ -112,15 +116,49 @@ local function session_messages(session_id)
       table.insert(messages, {
         id = payload.message_id,
         session_id = session_id,
-        role = event.event_type == "chat.session.started" and "user" or payload.role,
+        role = message_role(event),
         content = payload.content,
         created_at = event.occurred_at,
         event_id = event.id,
-        sequence = event.sequence
+        sequence = event.sequence,
+        in_reply_to_event_id = payload.in_reply_to_event_id
       })
     end
   end
   return messages
+end
+
+local function message_event(event_id, session_id)
+  for _, event in ipairs(message_events()) do
+    if event.id == event_id and (event.payload or {}).session_id == session_id then return event end
+  end
+  return nil
+end
+
+local function latest_assistant_event_id(session_id)
+  local events = message_events()
+  for index = #events, 1, -1 do
+    local event = events[index]
+    if (event.payload or {}).session_id == session_id and message_role(event) == "assistant" then
+      return event.id
+    end
+  end
+  return nil
+end
+
+local function triggering_user_event_id(context, session_id)
+  local current = context.current_event
+  if current and (current.payload or {}).session_id == session_id and message_role(current) == "user" then
+    return current.id
+  end
+  local correlated = habibi.events.query({ prefix = "chat.", correlation_id = context.correlation_id, limit = 1000 })
+  for index = #correlated, 1, -1 do
+    local event = correlated[index]
+    if (event.payload or {}).session_id == session_id and message_role(event) == "user" then
+      return event.id
+    end
+  end
+  return nil
 end
 
 habibi.web.route("GET", "/api/sessions", function(_request)
@@ -230,6 +268,17 @@ habibi.web.route("POST", "/api/sessions/:session_id/messages", function(request)
   if type(body.message_id) ~= "string" or body.message_id == "" then
     return error_response(400, "message_id is required")
   end
+  local reply_to_event_id = body.reply_to_event_id
+  if reply_to_event_id ~= nil then
+    if type(reply_to_event_id) ~= "string" or reply_to_event_id == "" then
+      return error_response(400, "reply_to_event_id must be a non-empty event ID")
+    end
+    if not message_event(reply_to_event_id, session_id) then
+      return error_response(400, "reply target must be an existing message in this session")
+    end
+  else
+    reply_to_event_id = latest_assistant_event_id(session_id)
+  end
 
   return {
     status = 201,
@@ -241,7 +290,8 @@ habibi.web.route("POST", "/api/sessions/:session_id/messages", function(request)
         session_id = session_id,
         message_id = body.message_id,
         role = "user",
-        content = content
+        content = content,
+        in_reply_to_event_id = reply_to_event_id
       }
     }
   }
@@ -350,11 +400,15 @@ habibi.tools.register({
   if session.archived then error("chat session has been removed") end
   if type(arguments.content) ~= "string" or arguments.content:match("^%s*$") then error("content must be non-empty") end
   local message_id = habibi.id()
+  local reply_to_event_id = triggering_user_event_id(context, session_id)
   return {
     result = { sent = true, session_id = session_id, message_id = message_id },
     events = {{
       type = "chat.message.created",
-      payload = { session_id = session_id, message_id = message_id, role = "assistant", content = arguments.content }
+      payload = {
+        session_id = session_id, message_id = message_id, role = "assistant", content = arguments.content,
+        in_reply_to_event_id = reply_to_event_id
+      }
     }}
   }
 end)

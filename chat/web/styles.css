@@ -87,6 +87,10 @@ h3 { font-size: 21px; }
 .message-heading { display: flex; align-items: center; gap: 9px; margin-bottom: 7px; }
 .message .role { color: var(--muted); font-size: 10px; font-weight: 750; letter-spacing: .09em; text-transform: uppercase; }
 .message time { color: #5f6861; font-size: 10px; }
+.message-reply { margin-left: auto; border: 0; padding: 2px 5px; background: transparent; color: #718077; font-size: 10px; cursor: pointer; }
+.message-reply:hover, .message-reply:focus-visible { color: var(--accent); }
+.reply-reference { display: block; max-width: 100%; margin: 0 0 8px; overflow: hidden; border: 0; border-left: 2px solid #84ed9866; padding: 3px 8px; background: transparent; color: #768079; font-size: 10px; text-align: left; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; }
+.reply-reference:hover, .reply-reference:focus-visible { color: var(--accent); }
 .message .content { line-height: 1.67; white-space: pre-wrap; overflow-wrap: anywhere; }
 .message.user { margin-left: 16%; padding: 14px 16px; border: 1px solid var(--border); border-radius: 15px 15px 4px 15px; background: var(--panel-raised); }
 .message.assistant { margin-right: 10%; }
@@ -94,6 +98,13 @@ h3 { font-size: 21px; }
 .message.pending { opacity: .62; }
 
 .composer-wrap { width: min(860px, calc(100% - 40px)); margin: 0 auto 18px; }
+.reply-target { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 10px -1px; border: 1px solid var(--border-strong); border-bottom: 0; border-radius: 12px 12px 0 0; padding: 8px 11px; background: #101612; color: var(--muted); font-size: 11px; }
+.reply-target[hidden] { display: none; }
+.reply-target > span { display: grid; min-width: 0; gap: 2px; }
+.reply-target strong { color: var(--accent); font-size: 10px; text-transform: uppercase; }
+.reply-target span span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.reply-target button { border: 0; background: transparent; color: var(--muted); font-size: 18px; cursor: pointer; }
+.reply-target:not([hidden]) + .composer { border-radius: 0 0 17px 17px; }
 .composer { display: flex; align-items: end; gap: 10px; padding: 10px; border: 1px solid var(--border-strong); border-radius: 17px; background: var(--panel-raised); box-shadow: 0 18px 60px #0009; }
 .composer:focus-within { border-color: #628169; box-shadow: 0 18px 60px #0009, 0 0 0 3px #84ed9815; }
 .composer textarea { flex: 1; min-height: 39px; max-height: 180px; resize: none; border: 0; outline: 0; padding: 9px 10px; background: transparent; color: var(--text); line-height: 1.45; }
