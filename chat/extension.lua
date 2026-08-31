@@ -431,30 +431,3 @@ habibi.context.register("chat.session-history", function(trigger)
   end
   return { items = items }
 end)
-
-habibi.tools.suggest("chat.history", function(trigger)
-  if trigger.event_type ~= "chat.session.started" and trigger.event_type ~= "chat.message.created" then
-    return habibi.array({})
-  end
-  local content = string.lower(trigger.payload.content or "")
-  local cues = { "earlier", "previous", "before", "remember", "recall", "other session", "other conversation", "past chat", "chat history", "told you", "ever ask", "we talked" }
-  for _, cue in ipairs(cues) do
-    if string.find(content, cue, 1, true) then
-      return habibi.array({{
-        tool = "chat.search_messages",
-        reason = "Search durable chat messages across all sessions instead of claiming past conversations are unavailable."
-      }})
-    end
-  end
-  return habibi.array({})
-end)
-
-habibi.tools.suggest("chat.reply", function(trigger)
-  if trigger.event_type ~= "chat.session.started" and trigger.event_type ~= "chat.message.created" then
-    return habibi.array({})
-  end
-  return habibi.array({{
-    tool = "chat.send_message",
-    reason = "Reply to the triggering chat with session_id 'current'."
-  }})
-end)
