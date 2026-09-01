@@ -41,7 +41,7 @@ habibi update web-search
 
 | Extension | Version | Description |
 | --- | ---: | --- |
-| [`chat`](chat/) | `0.3.3` | Event-streamed multi-session chat with explicit and automatic reply relationships. |
+| [`chat`](chat/) | `0.3.4` | Event-streamed multi-session chat with explicit and automatic reply relationships. |
 | [`workspace`](workspace/) | `0.1.0` | Scoped file reading, search, and checked workspace mutations. |
 | [`process`](process/) | `0.1.1` | Granted native executables in bounded Linux sandboxes. |
 | [`git`](git/) | `0.1.0` | Read-only repository inspection through sandboxed Git. |
@@ -68,6 +68,7 @@ chat-v0.3.0
 chat-v0.3.1
 chat-v0.3.2
 chat-v0.3.3
+chat-v0.3.4
 workspace-v0.1.0
 process-v0.1.0
 process-v0.1.1

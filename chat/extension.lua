@@ -375,7 +375,7 @@ end)
 
 habibi.tools.register({
   name = "chat.send_message",
-  description = "Send a message to the user in an explicitly identified chat session. Use this tool for every user-visible response.",
+  description = "Sends a message to the user in the specified channel. Use this whenever you respond to a user chat message or want to inform the user about anything related to the channel topic.",
   input_schema = {
     type = "object",
     properties = { session_id = { type = "string", description = "Use 'current' for the session in the current event, or an exact session ID." }, content = { type = "string" } },
