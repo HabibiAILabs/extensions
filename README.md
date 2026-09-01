@@ -41,7 +41,8 @@ habibi update web-search
 
 | Extension | Version | Description |
 | --- | ---: | --- |
-| [`chat`](chat/) | `0.3.4` | Event-streamed multi-session chat with explicit and automatic reply relationships. |
+| [`chat`](chat/) | `0.3.5` | Event-streamed multi-session chat with explicit and automatic reply relationships. |
+| [`memory`](memory/) | `0.1.0` | Causal and semantic durable-event context retrieval. |
 | [`workspace`](workspace/) | `0.1.0` | Scoped file reading, search, and checked workspace mutations. |
 | [`process`](process/) | `0.1.1` | Granted native executables in bounded Linux sandboxes. |
 | [`git`](git/) | `0.1.0` | Read-only repository inspection through sandboxed Git. |
@@ -69,6 +70,7 @@ chat-v0.3.1
 chat-v0.3.2
 chat-v0.3.3
 chat-v0.3.4
+chat-v0.3.5
 workspace-v0.1.0
 process-v0.1.0
 process-v0.1.1
@@ -82,6 +84,7 @@ web-search-v0.1.4
 web-search-v0.1.5
 web-search-v0.1.6
 web-search-v0.1.7
+memory-v0.1.0
 ```
 
 A repository commit may update several extensions independently. Installations remain reproducible because Habibi records both the extension version and exact Git commit.
@@ -94,6 +97,9 @@ extensions/
     extension.toml
     extension.lua
     web/
+  memory/
+    extension.toml
+    extension.lua
   workspace/
     extension.toml
     extension.lua
