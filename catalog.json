@@ -20,7 +20,7 @@
     {
       "id": "process",
       "name": "Process",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "description": "Run globally approved native programs in bounded Linux sandboxes.",
       "source": "https://github.com/HabibiAILabs/extensions.git",
       "subdir": "process"

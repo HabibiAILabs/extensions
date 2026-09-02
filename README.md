@@ -44,7 +44,7 @@ habibi update web-search
 | --- | ---: | --- |
 | [`chat`](chat/) | `0.3.6` | Event-streamed multi-session chat with explicit and automatic reply relationships. |
 | [`memory`](memory/) | `0.1.0` | Causal and semantic durable-event context retrieval. |
-| [`process`](process/) | `0.2.1` | Globally approved native programs in bounded Linux sandboxes. |
+| [`process`](process/) | `0.2.2` | Globally approved native programs in bounded Linux sandboxes. |
 | [`git`](git/) | `0.2.0` | Read-only repository inspection through sandboxed Git. |
 | [`habibi-docs`](habibi-docs/) | `0.1.4` | Searchable runtime and extension-development documentation. |
 | [`soul`](soul/) | `0.1.2` | User-authored agent personality with a local editor. |
@@ -73,6 +73,7 @@ process-v0.1.0
 process-v0.1.1
 process-v0.2.0
 process-v0.2.1
+process-v0.2.2
 git-v0.1.0
 git-v0.2.0
 habibi-docs-v0.1.0
