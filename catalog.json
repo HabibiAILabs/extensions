@@ -4,7 +4,7 @@
     {
       "id": "chat",
       "name": "Chat",
-      "version": "0.3.5",
+      "version": "0.3.6",
       "description": "Multi-session web chat with durable reply relationships and owned context.",
       "source": "https://github.com/HabibiAssistant/extensions.git",
       "subdir": "chat"
@@ -44,7 +44,7 @@
     {
       "id": "habibi-docs",
       "name": "Habibi",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Searchable runtime and extension-development documentation.",
       "source": "https://github.com/HabibiAssistant/extensions.git",
       "subdir": "habibi-docs"
@@ -52,7 +52,7 @@
     {
       "id": "soul",
       "name": "Soul",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "A user-authored personality prompt with a local editor.",
       "source": "https://github.com/HabibiAssistant/extensions.git",
       "subdir": "soul"

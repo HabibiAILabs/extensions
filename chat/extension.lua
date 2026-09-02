@@ -1,3 +1,5 @@
+habibi.web.home({ path = "/", icon = "/icon.svg" })
+
 local function error_response(status, message)
   return { status = status, json = { error = message } }
 end

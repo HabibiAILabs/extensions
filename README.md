@@ -44,13 +44,13 @@ habibi update web-search
 
 | Extension | Version | Description |
 | --- | ---: | --- |
-| [`chat`](chat/) | `0.3.5` | Event-streamed multi-session chat with explicit and automatic reply relationships. |
+| [`chat`](chat/) | `0.3.6` | Event-streamed multi-session chat with explicit and automatic reply relationships. |
 | [`memory`](memory/) | `0.1.0` | Causal and semantic durable-event context retrieval. |
 | [`workspace`](workspace/) | `0.1.0` | Scoped file reading, search, and checked workspace mutations. |
 | [`process`](process/) | `0.1.1` | Granted native executables in bounded Linux sandboxes. |
 | [`git`](git/) | `0.1.0` | Read-only repository inspection through sandboxed Git. |
-| [`habibi-docs`](habibi-docs/) | `0.1.0` | Searchable runtime and extension-development documentation. |
-| [`soul`](soul/) | `0.1.0` | User-authored agent personality with a local editor. |
+| [`habibi-docs`](habibi-docs/) | `0.1.1` | Searchable runtime and extension-development documentation. |
+| [`soul`](soul/) | `0.1.1` | User-authored agent personality with a local editor. |
 | [`web-search`](web-search/) | `0.1.7` | Brave or self-hosted SearXNG public-web discovery. |
 
 Workspace starts with no filesystem access. After installation, grant one or more existing absolute
@@ -75,12 +75,15 @@ chat-v0.3.2
 chat-v0.3.3
 chat-v0.3.4
 chat-v0.3.5
+chat-v0.3.6
 workspace-v0.1.0
 process-v0.1.0
 process-v0.1.1
 git-v0.1.0
 habibi-docs-v0.1.0
+habibi-docs-v0.1.1
 soul-v0.1.0
+soul-v0.1.1
 web-search-v0.1.0
 web-search-v0.1.1
 web-search-v0.1.2

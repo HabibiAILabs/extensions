@@ -29,7 +29,7 @@ local sections = {
   },
   {
     title = "Web routes and static UI",
-    content = [[With web capability, register namespaced routes using habibi.web.route(method, path, handler). Requests include method, path, path_params, query, headers, body, and parsed json. Responses use status plus json or body/content_type. Configure [web] static_dir = "web" to serve package assets below /extensions/EXTENSION_ID/. Routes and static content share Habibi's origin and are trusted local application code.]]
+    content = [[With web capability, register namespaced routes using habibi.web.route(method, path, handler). Requests include method, path, path_params, query, headers, body, and parsed json. Responses use status plus json or body/content_type. Configure [web] static_dir = "web" to serve package assets below /extensions/EXTENSION_ID/. Call habibi.web.home({ path = "/", icon = "/icon.svg" }) to designate an optional app shown on Habibi's homepage and opened in the shared /apps shell. Routes and static content share Habibi's origin and are trusted local application code.]]
   },
   {
     title = "Filesystem, process, and search",

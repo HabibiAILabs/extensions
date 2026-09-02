@@ -1,6 +1,6 @@
 id = "chat"
 name = "Chat"
-version = "0.3.5"
+version = "0.3.6"
 description = "A multi-session web chat over Habibi's continuous event history."
 api_version = 3
 

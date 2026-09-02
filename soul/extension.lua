@@ -1,3 +1,5 @@
+habibi.web.home({ path = "/", icon = "/icon.svg" })
+
 local MAX_PROMPT_BYTES = 16 * 1024
 local KEY = "prompt"
 
