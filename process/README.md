@@ -8,10 +8,15 @@ habibi install https://github.com/HabibiAILabs/extensions.git --subdir process
 
 Configure Habibi's global boundaries on **Settings**:
 
-1. Include directories in which extensions may work; optional exclusions always win.
-2. Include canonical native ELF program paths; optional program exclusions always win.
+1. Add absolute directory include/exclude patterns for where extensions may work.
+2. Add absolute native ELF program include/exclude patterns.
 
-The model invokes an unambiguous approved basename or an approved absolute path. Program bytes are
+Patterns support `*` and `?`. The most specific matching rule wins; includes win ties. This permits
+specific include patterns to override a broad `*` exclusion.
+
+The model invokes an unambiguous approved basename or an approved absolute path. Basenames resolve
+only from explicit entries, concrete pattern directories, or fixed system locations under `*`; the
+ambient `PATH` is never searched. Program bytes are
 read at execution time and run from a sealed memory file. Scripts/shebangs, ambient PATH lookup,
 implicit shell evaluation, caller environments, stdin, network access, and detached processes are
 unsupported. Approved programs may invoke helpers; approve an interpreter or shell only when its

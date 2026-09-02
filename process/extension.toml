@@ -1,6 +1,6 @@
 id = "process"
 name = "Process"
-version = "0.2.0"
+version = "0.2.1"
 description = "Run globally approved native programs in bounded Linux sandboxes."
 api_version = 4
 

@@ -20,7 +20,7 @@
     {
       "id": "process",
       "name": "Process",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "description": "Run globally approved native programs in bounded Linux sandboxes.",
       "source": "https://github.com/HabibiAILabs/extensions.git",
       "subdir": "process"
@@ -36,7 +36,7 @@
     {
       "id": "habibi-docs",
       "name": "Habibi",
-      "version": "0.1.3",
+      "version": "0.1.4",
       "description": "Searchable runtime and extension-development documentation.",
       "source": "https://github.com/HabibiAILabs/extensions.git",
       "subdir": "habibi-docs"
