@@ -4,26 +4,26 @@
 
 <h1 align="center">Official Habibi extensions</h1>
 
-Official, versioned extensions maintained by the [Habibi Assistant](https://github.com/HabibiAssistant) organization.
+Official, versioned extensions maintained by the [Habibi Assistant](https://github.com/HabibiAILabs) organization.
 
 ## Install
 
 Install directly from GitHub:
 
 ```sh
-habibi install https://github.com/HabibiAssistant/extensions.git --subdir chat
-habibi install https://github.com/HabibiAssistant/extensions.git --subdir process
-habibi install https://github.com/HabibiAssistant/extensions.git --subdir git
-habibi install https://github.com/HabibiAssistant/extensions.git --subdir memory
-habibi install https://github.com/HabibiAssistant/extensions.git --subdir habibi-docs
-habibi install https://github.com/HabibiAssistant/extensions.git --subdir soul
-habibi install https://github.com/HabibiAssistant/extensions.git --subdir web-search
+habibi install https://github.com/HabibiAILabs/extensions.git --subdir chat
+habibi install https://github.com/HabibiAILabs/extensions.git --subdir process
+habibi install https://github.com/HabibiAILabs/extensions.git --subdir git
+habibi install https://github.com/HabibiAILabs/extensions.git --subdir memory
+habibi install https://github.com/HabibiAILabs/extensions.git --subdir habibi-docs
+habibi install https://github.com/HabibiAILabs/extensions.git --subdir soul
+habibi install https://github.com/HabibiAILabs/extensions.git --subdir web-search
 ```
 
 Or install from a local checkout while developing:
 
 ```sh
-git clone https://github.com/HabibiAssistant/extensions.git
+git clone https://github.com/HabibiAILabs/extensions.git
 habibi install ./extensions --subdir chat
 ```
 
@@ -132,4 +132,4 @@ HABIBI_EXTENSIONS_DIR=/tmp/habibi-extensions habibi install . --subdir habibi-do
 HABIBI_EXTENSIONS_DIR=/tmp/habibi-extensions habibi install . --subdir soul
 ```
 
-See the [extension authoring documentation](https://github.com/HabibiAssistant/habibi/blob/main/docs/extensions.md) in the main repository.
+See the [extension authoring documentation](https://github.com/HabibiAILabs/habibi/blob/main/docs/extensions.md) in the main repository.

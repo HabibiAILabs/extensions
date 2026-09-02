@@ -3,7 +3,7 @@
 Bounded Linux process execution for Habibi.
 
 ```sh
-habibi install https://github.com/HabibiAssistant/extensions.git --subdir process
+habibi install https://github.com/HabibiAILabs/extensions.git --subdir process
 ```
 
 On Habibi's **Extensions** page, configure both:

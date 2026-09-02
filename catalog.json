@@ -6,7 +6,7 @@
       "name": "Chat",
       "version": "0.3.6",
       "description": "Multi-session web chat with durable reply relationships and owned context.",
-      "source": "https://github.com/HabibiAssistant/extensions.git",
+      "source": "https://github.com/HabibiAILabs/extensions.git",
       "subdir": "chat"
     },
     {
@@ -14,7 +14,7 @@
       "name": "Memory",
       "version": "0.1.0",
       "description": "Adds causal and semantically related durable events to model context.",
-      "source": "https://github.com/HabibiAssistant/extensions.git",
+      "source": "https://github.com/HabibiAILabs/extensions.git",
       "subdir": "memory"
     },
     {
@@ -22,7 +22,7 @@
       "name": "Process",
       "version": "0.1.1",
       "description": "Run explicitly granted native executables in bounded Linux sandboxes.",
-      "source": "https://github.com/HabibiAssistant/extensions.git",
+      "source": "https://github.com/HabibiAILabs/extensions.git",
       "subdir": "process"
     },
     {
@@ -30,7 +30,7 @@
       "name": "Git",
       "version": "0.1.0",
       "description": "Read repository status, diffs, history, and objects through sandboxed Git.",
-      "source": "https://github.com/HabibiAssistant/extensions.git",
+      "source": "https://github.com/HabibiAILabs/extensions.git",
       "subdir": "git"
     },
     {
@@ -38,7 +38,7 @@
       "name": "Habibi",
       "version": "0.1.2",
       "description": "Searchable runtime and extension-development documentation.",
-      "source": "https://github.com/HabibiAssistant/extensions.git",
+      "source": "https://github.com/HabibiAILabs/extensions.git",
       "subdir": "habibi-docs"
     },
     {
@@ -46,7 +46,7 @@
       "name": "Soul",
       "version": "0.1.2",
       "description": "A user-authored personality prompt with a local editor.",
-      "source": "https://github.com/HabibiAssistant/extensions.git",
+      "source": "https://github.com/HabibiAILabs/extensions.git",
       "subdir": "soul"
     },
     {
@@ -54,7 +54,7 @@
       "name": "Web Search",
       "version": "0.1.7",
       "description": "Search the public web through Brave or self-hosted SearXNG.",
-      "source": "https://github.com/HabibiAssistant/extensions.git",
+      "source": "https://github.com/HabibiAILabs/extensions.git",
       "subdir": "web-search"
     }
   ]

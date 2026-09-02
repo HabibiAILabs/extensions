@@ -3,7 +3,7 @@
 Search-only public-web discovery with bounded, citable results. No page fetching.
 
 ```sh
-habibi install https://github.com/HabibiAssistant/extensions.git --subdir web-search
+habibi install https://github.com/HabibiAILabs/extensions.git --subdir web-search
 ```
 
 ## Brave Search API

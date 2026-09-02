@@ -3,7 +3,7 @@
 Read-only repository inspection through Habibi's Linux Process sandbox.
 
 ```sh
-habibi install https://github.com/HabibiAssistant/extensions.git --subdir git
+habibi install https://github.com/HabibiAILabs/extensions.git --subdir git
 ```
 
 On Habibi's **Extensions** page, grant:
