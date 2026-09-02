@@ -52,7 +52,7 @@
     {
       "id": "soul",
       "name": "Soul",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "description": "A user-authored personality prompt with a local editor.",
       "source": "https://github.com/HabibiAssistant/extensions.git",
       "subdir": "soul"

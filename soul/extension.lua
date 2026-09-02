@@ -1,4 +1,4 @@
-habibi.web.home({ path = "/", icon = "/icon.svg" })
+habibi.web.home({ path = "/", icon = "/icon.svg", title = "Soul Config" })
 
 local MAX_PROMPT_BYTES = 16 * 1024
 local KEY = "prompt"
