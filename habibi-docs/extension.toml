@@ -1,0 +1,8 @@
+id = "habibi-docs"
+name = "Habibi"
+version = "0.1.0"
+description = "Searchable runtime and extension-development documentation for Habibi."
+api_version = 3
+
+[capabilities]
+tools = true

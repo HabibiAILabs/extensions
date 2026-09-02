@@ -15,7 +15,9 @@ habibi install https://github.com/HabibiAssistant/extensions.git --subdir chat
 habibi install https://github.com/HabibiAssistant/extensions.git --subdir workspace
 habibi install https://github.com/HabibiAssistant/extensions.git --subdir process
 habibi install https://github.com/HabibiAssistant/extensions.git --subdir git
-habibi install https://github.com/HabibiAssistant/extensions.git --subdir extension-studio
+habibi install https://github.com/HabibiAssistant/extensions.git --subdir memory
+habibi install https://github.com/HabibiAssistant/extensions.git --subdir habibi-docs
+habibi install https://github.com/HabibiAssistant/extensions.git --subdir soul
 habibi install https://github.com/HabibiAssistant/extensions.git --subdir web-search
 ```
 
@@ -33,7 +35,8 @@ habibi update chat
 habibi update workspace
 habibi update process
 habibi update git
-habibi update extension-studio
+habibi update habibi-docs
+habibi update soul
 habibi update web-search
 ```
 
@@ -46,7 +49,8 @@ habibi update web-search
 | [`workspace`](workspace/) | `0.1.0` | Scoped file reading, search, and checked workspace mutations. |
 | [`process`](process/) | `0.1.1` | Granted native executables in bounded Linux sandboxes. |
 | [`git`](git/) | `0.1.0` | Read-only repository inspection through sandboxed Git. |
-| [`extension-studio`](extension-studio/) | `0.1.0` | Scoped extension draft authoring and validation. |
+| [`habibi-docs`](habibi-docs/) | `0.1.0` | Searchable runtime and extension-development documentation. |
+| [`soul`](soul/) | `0.1.0` | User-authored agent personality with a local editor. |
 | [`web-search`](web-search/) | `0.1.7` | Brave or self-hosted SearXNG public-web discovery. |
 
 Workspace starts with no filesystem access. After installation, grant one or more existing absolute
@@ -75,7 +79,8 @@ workspace-v0.1.0
 process-v0.1.0
 process-v0.1.1
 git-v0.1.0
-extension-studio-v0.1.0
+habibi-docs-v0.1.0
+soul-v0.1.0
 web-search-v0.1.0
 web-search-v0.1.1
 web-search-v0.1.2
@@ -109,9 +114,13 @@ extensions/
   git/
     extension.toml
     extension.lua
-  extension-studio/
+  habibi-docs/
     extension.toml
     extension.lua
+  soul/
+    extension.toml
+    extension.lua
+    web/
   web-search/
     extension.toml
     extension.lua
@@ -125,7 +134,8 @@ Run Habibi against a disposable extensions directory, install the local package,
 
 ```sh
 HABIBI_EXTENSIONS_DIR=/tmp/habibi-extensions habibi install . --subdir chat
-HABIBI_EXTENSIONS_DIR=/tmp/habibi-extensions habibi install . --subdir workspace
+HABIBI_EXTENSIONS_DIR=/tmp/habibi-extensions habibi install . --subdir habibi-docs
+HABIBI_EXTENSIONS_DIR=/tmp/habibi-extensions habibi install . --subdir soul
 ```
 
 See the [extension authoring documentation](https://github.com/HabibiAssistant/habibi/blob/main/docs/extensions.md) in the main repository.

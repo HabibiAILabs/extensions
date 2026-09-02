@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Soul · Habibi</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main>
+    <p class="eyebrow">HABIBI EXTENSION</p>
+    <h1>Soul</h1>
+    <p class="intro">Describe your agent’s identity, personality, voice, values, and behavioral preferences. Soul becomes system context for every event.</p>
+    <form id="soul-form">
+      <label for="prompt">Agent soul</label>
+      <textarea id="prompt" name="prompt" maxlength="16384" spellcheck="true" placeholder="You are thoughtful, direct, curious…"></textarea>
+      <div class="footer">
+        <span id="count">0 bytes</span>
+        <button type="submit">Save soul</button>
+      </div>
+    </form>
+    <p id="status" role="status"></p>
+  </main>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

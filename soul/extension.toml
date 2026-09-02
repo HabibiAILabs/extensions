@@ -1,0 +1,13 @@
+id = "soul"
+name = "Soul"
+version = "0.1.0"
+description = "A user-authored personality prompt contributed to Habibi's system context."
+api_version = 3
+
+[capabilities]
+web = true
+kv = true
+context = true
+
+[web]
+static_dir = "web"

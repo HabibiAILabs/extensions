@@ -42,12 +42,20 @@
       "subdir": "git"
     },
     {
-      "id": "extension-studio",
-      "name": "Extension Studio",
+      "id": "habibi-docs",
+      "name": "Habibi",
       "version": "0.1.0",
-      "description": "Create, edit, and validate isolated extension drafts.",
+      "description": "Searchable runtime and extension-development documentation.",
       "source": "https://github.com/HabibiAssistant/extensions.git",
-      "subdir": "extension-studio"
+      "subdir": "habibi-docs"
+    },
+    {
+      "id": "soul",
+      "name": "Soul",
+      "version": "0.1.0",
+      "description": "A user-authored personality prompt with a local editor.",
+      "source": "https://github.com/HabibiAssistant/extensions.git",
+      "subdir": "soul"
     },
     {
       "id": "web-search",
