@@ -1,9 +1,0 @@
-id = "workspace"
-name = "Workspace"
-version = "0.1.0"
-description = "Scoped file reading, search, and checked workspace mutations."
-api_version = 2
-
-[capabilities]
-tools = true
-filesystem = true

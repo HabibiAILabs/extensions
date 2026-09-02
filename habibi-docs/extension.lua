@@ -37,7 +37,7 @@ local sections = {
   },
   {
     title = "Installation and development workflow",
-    content = [[Install with: habibi install PATH_OR_GIT_URL [--subdir ID] [--ref TAG]. Update with habibi update ID and roll back with habibi rollback ID. Installation copies and scans the package, rejects symlinks and unsafe paths, validates Lua in isolation, records provenance/hash, and atomically replaces the installed generation. To modify behavior, use an available coding/workspace extension to edit an extension package, increment its version, validate locally, then install or update it.]]
+    content = [[Install with: habibi install PATH_OR_GIT_URL [--subdir ID] [--ref TAG]. Update with habibi update ID and roll back with habibi rollback ID. Installation copies and scans the package, rejects symlinks and unsafe paths, validates Lua in isolation, records provenance/hash, and atomically replaces the installed generation. To modify behavior, use an available coding extension to edit an extension package, increment its version, validate locally, then install or update it.]]
   },
   {
     title = "Minimal extension example",

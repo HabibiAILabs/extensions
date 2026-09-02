@@ -18,14 +18,6 @@
       "subdir": "memory"
     },
     {
-      "id": "workspace",
-      "name": "Workspace",
-      "version": "0.1.0",
-      "description": "Scoped file reading, search, and checked workspace mutations.",
-      "source": "https://github.com/HabibiAssistant/extensions.git",
-      "subdir": "workspace"
-    },
-    {
       "id": "process",
       "name": "Process",
       "version": "0.1.1",
@@ -44,7 +36,7 @@
     {
       "id": "habibi-docs",
       "name": "Habibi",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "description": "Searchable runtime and extension-development documentation.",
       "source": "https://github.com/HabibiAssistant/extensions.git",
       "subdir": "habibi-docs"

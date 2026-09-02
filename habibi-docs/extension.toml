@@ -1,6 +1,6 @@
 id = "habibi-docs"
 name = "Habibi"
-version = "0.1.1"
+version = "0.1.2"
 description = "Searchable runtime and extension-development documentation for Habibi."
 api_version = 3
 
