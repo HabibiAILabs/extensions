@@ -1,13 +1,13 @@
 habibi.tools.register({
   name = "process.run",
-  description = "Run an explicitly granted native executable in a bounded Linux sandbox. Arguments are passed directly without implicit shell evaluation. The process has no network, receives a fixed non-secret environment, and can access only this extension's granted filesystem root containing cwd. Output returned by this tool becomes durable Habibi action history; do not use it for secrets.",
+  description = "Run a globally approved native program in a bounded Linux sandbox. Arguments are passed directly without implicit shell evaluation. The process has no network, receives a fixed non-secret environment, and can access only its working directory inside Habibi's global directory boundary. Output returned by this tool becomes durable Habibi action history; do not use it for secrets.",
   input_schema = {
     type = "object",
     additionalProperties = false,
     properties = {
-      executable = {
+      program = {
         type = "string",
-        description = "User-granted executable alias, not a path."
+        description = "Program basename or approved absolute path from Habibi's global boundary settings."
       },
       args = {
         type = "array",
@@ -26,7 +26,7 @@ habibi.tools.register({
         description = "Optional timeout; defaults to 30000 ms."
       }
     },
-    required = { "executable", "cwd" }
+    required = { "program", "cwd" }
   }
 }, function(arguments)
   return { result = habibi.process.run(arguments) }

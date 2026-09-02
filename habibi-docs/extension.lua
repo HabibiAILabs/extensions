@@ -5,11 +5,11 @@ local sections = {
   },
   {
     title = "Extension package and manifest",
-    content = [[An extension is a directory containing extension.toml and extension.lua, with an optional web directory. Context extensions use api_version = 3. Manifest fields are id, name, version, description, api_version, capabilities, and optional [web] static_dir. IDs use lowercase letters, digits, and hyphens. Tool names must use the extension ID namespace. Content changes require a semantic version increase. Installed extensions are trusted local code.]]
+    content = [[An extension is a directory containing extension.toml and extension.lua, with an optional web directory. Context extensions use api_version 3 or newer; global filesystem/process boundaries require api_version 4. Manifest fields are id, name, version, description, api_version, capabilities, and optional [web] static_dir. IDs use lowercase letters, digits, and hyphens. Tool names must use the extension ID namespace. Content changes require a semantic version increase. Installed extensions are trusted local code.]]
   },
   {
     title = "Capabilities",
-    content = [[Capabilities default to false. Available capabilities are web, kv, events, tools, context, filesystem, process, and search. Capabilities expose only the corresponding habibi host APIs and make behavior visible for review. Lua has no io, os, package, debug, generic network, shell, filesystem, or secret access. Filesystem and process additionally require user-owned grants.]]
+    content = [[Capabilities default to false. Available capabilities are web, kv, events, tools, context, filesystem, process, and search. Capabilities expose only the corresponding habibi host APIs and make behavior visible for review. Lua has no io, os, package, debug, generic network, shell, filesystem, or secret access. Filesystem and process are additionally bounded by global core include/exclude settings.]]
   },
   {
     title = "Context hooks",
@@ -25,7 +25,7 @@ local sections = {
   },
   {
     title = "KV storage",
-    content = [[With kv capability, use habibi.kv.get(key), set(key, JSON-compatible value), delete(key), and list(prefix). Core always supplies the extension namespace; extensions cannot access another extension's KV values. KV is appropriate for extension settings such as a user-authored soul prompt. Durable domain facts should remain events rather than mutable KV.]]
+    content = [[With kv capability, use habibi.kv.get(key), set(key, JSON-compatible value), delete(key), and list(prefix). Core always supplies the extension namespace; extensions cannot access another extension's KV values. KV is appropriate for extension settings such as a user-authored soul prompt. Durable domain facts should remain events rather than mutable KV. The core Extensions page provides a read-only KV explorer. An extension may declare [config] schema = \"config.schema.json\" for a schema-validated configuration page and read the result with habibi.config.get().]]
   },
   {
     title = "Web routes and static UI",
@@ -33,7 +33,7 @@ local sections = {
   },
   {
     title = "Filesystem, process, and search",
-    content = [[Workspace-style filesystem access is default-deny, bounded to exact user grants, no-follow, hash-checked, and atomic. Process is Linux-only, shell-free, exact-executable-grant based, bounded, and sandboxed with Bubblewrap and cgroup v2. Search exposes only configured Brave or SearXNG adapters, not generic HTTP. These host APIs are action-only where external effects are possible.]]
+    content = [[Filesystem access is default-deny, bounded by global directory include/exclude settings, no-follow, hash-checked, and atomic. Process is Linux-only, shell-free, bounded by global program and directory settings, and sandboxed with Bubblewrap and cgroup v2. Search exposes only configured Brave or SearXNG adapters, not generic HTTP. These host APIs are action-only where external effects are possible.]]
   },
   {
     title = "Installation and development workflow",

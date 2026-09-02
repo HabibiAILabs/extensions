@@ -42,11 +42,10 @@ local function run_git(arguments, command)
     args[#args + 1] = value
   end
   local result = habibi.process.run({
-    executable = "git",
+    program = "git",
     args = args,
     cwd = arguments.repository,
     timeout_ms = arguments.timeout_ms or 30000,
-    filesystem_root = arguments.repository,
     filesystem_access = "read_only",
   })
   if not result.stdout_utf8 or not result.stderr_utf8 then

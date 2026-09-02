@@ -6,20 +6,19 @@ Bounded Linux process execution for Habibi.
 habibi install https://github.com/HabibiAILabs/extensions.git --subdir process
 ```
 
-On Habibi's **Extensions** page, configure both:
+Configure Habibi's global boundaries on **Settings**:
 
-1. Filesystem roots available read-write to the sandbox.
-2. Exact native ELF executables as `alias=/absolute/path`.
+1. Include directories in which extensions may work; optional exclusions always win.
+2. Include canonical native ELF program paths; optional program exclusions always win.
 
-The model invokes aliases, never paths. Extension-owned callers may additionally require one exact
-grant and mount it read-only; the generic `process.run` tool keeps the containing read-write default.
-Executable identity and SHA-256 are checked on every run,
-then the verified bytes are executed from a sealed memory file. Scripts/shebangs, implicit shell
-evaluation, PATH lookup, custom environments, stdin, network access, and detached processes are
-unsupported. Grant a native interpreter only when its full argv authority is intended.
+The model invokes an unambiguous approved basename or an approved absolute path. Program bytes are
+read at execution time and run from a sealed memory file. Scripts/shebangs, ambient PATH lookup,
+implicit shell evaluation, caller environments, stdin, network access, and detached processes are
+unsupported. Approved programs may invoke helpers; approve an interpreter or shell only when its
+full argv authority is intended.
 
 Each run uses Bubblewrap namespaces and a delegated cgroup v2 leaf. The sandbox exposes the selected
-filesystem root, `/usr`, runtime libraries, minimal `/dev`, `/proc`, and an empty `/tmp`. Stdout and
+working directory, `/usr`, runtime libraries, minimal `/dev`, `/proc`, and an empty `/tmp`. Stdout and
 stderr are capped at 1 MiB each. Timeout defaults to 30 seconds and cannot exceed 120 seconds. The
 entire cgroup is killed after completion, timeout, or output overflow. Execution fails closed if
 Bubblewrap or delegated cgroup v2 support is unavailable.
