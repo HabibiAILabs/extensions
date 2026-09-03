@@ -12,7 +12,7 @@ Install directly from GitHub:
 
 ```sh
 habibi install https://github.com/HabibiAILabs/extensions.git --subdir chat
-habibi install https://github.com/HabibiAILabs/extensions.git --subdir process
+habibi install https://github.com/HabibiAILabs/extensions.git --subdir essentials
 habibi install https://github.com/HabibiAILabs/extensions.git --subdir git
 habibi install https://github.com/HabibiAILabs/extensions.git --subdir memory
 habibi install https://github.com/HabibiAILabs/extensions.git --subdir habibi-docs
@@ -31,7 +31,7 @@ Habibi stages and automatically security/privacy scans every install and update 
 
 ```sh
 habibi update chat
-habibi update process
+habibi update essentials
 habibi update git
 habibi update habibi-docs
 habibi update soul
@@ -43,10 +43,10 @@ habibi update web-search
 | Extension | Version | Description |
 | --- | ---: | --- |
 | [`chat`](chat/) | `0.3.6` | Event-streamed multi-session chat with explicit and automatic reply relationships. |
-| [`memory`](memory/) | `0.1.0` | Causal and semantic durable-event context retrieval. |
-| [`process`](process/) | `0.2.2` | Globally approved native programs in bounded Linux sandboxes. |
+| [`memory`](memory/) | `0.1.1` | Causal and semantic durable-event context retrieval. |
+| [`essentials`](essentials/) | `0.1.0` | Bounded read, edit, find, grep, list, and Bash tools. |
 | [`git`](git/) | `0.2.0` | Read-only repository inspection through sandboxed Git. |
-| [`habibi-docs`](habibi-docs/) | `0.1.4` | Searchable runtime and extension-development documentation. |
+| [`habibi-docs`](habibi-docs/) | `0.1.5` | Searchable runtime and extension-development documentation. |
 | [`soul`](soul/) | `0.1.2` | User-authored agent personality with a local editor. |
 | [`web-search`](web-search/) | `0.1.7` | Brave or self-hosted SearXNG public-web discovery. |
 
@@ -74,6 +74,7 @@ process-v0.1.1
 process-v0.2.0
 process-v0.2.1
 process-v0.2.2
+essentials-v0.1.0
 git-v0.1.0
 git-v0.2.0
 habibi-docs-v0.1.0
@@ -81,6 +82,7 @@ habibi-docs-v0.1.1
 habibi-docs-v0.1.2
 habibi-docs-v0.1.3
 habibi-docs-v0.1.4
+habibi-docs-v0.1.5
 soul-v0.1.0
 soul-v0.1.1
 soul-v0.1.2
@@ -93,6 +95,7 @@ web-search-v0.1.5
 web-search-v0.1.6
 web-search-v0.1.7
 memory-v0.1.0
+memory-v0.1.1
 ```
 
 A repository commit may update several extensions independently. Installations remain reproducible because Habibi records both the extension version and exact Git commit.
@@ -108,7 +111,7 @@ extensions/
   memory/
     extension.toml
     extension.lua
-  process/
+  essentials/
     extension.toml
     extension.lua
   git/

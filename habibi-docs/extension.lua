@@ -33,7 +33,7 @@ local sections = {
   },
   {
     title = "Filesystem, process, and search",
-    content = [[Filesystem access is default-deny, bounded by global directory wildcard patterns, no-follow, hash-checked, and atomic. The most specific boundary rule wins and includes win ties. Process is Linux-only, shell-free, bounded by global program and directory patterns, and sandboxed with Bubblewrap and cgroup v2. Search exposes only configured Brave or SearXNG adapters, not generic HTTP. These host APIs are action-only where external effects are possible.]]
+    content = [[Filesystem access is default-deny, bounded by global directory wildcard patterns, no-follow, hash-checked, atomic, and output-bounded. The most specific boundary rule wins and includes win ties. Process execution is Linux-only, bounded by global program and directory patterns, output-limited, and sandboxed with Bubblewrap and cgroup v2. Essentials deliberately exposes Bash when it is approved. Search exposes only configured Brave or SearXNG adapters, not generic HTTP. These host APIs are action-only where external effects are possible.]]
   },
   {
     title = "Installation and development workflow",

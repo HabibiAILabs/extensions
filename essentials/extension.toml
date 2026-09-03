@@ -1,0 +1,10 @@
+id = "essentials"
+name = "Essentials"
+version = "0.1.0"
+description = "Read, edit, find, grep, list, and run shell commands within Habibi's global boundaries."
+api_version = 4
+
+[capabilities]
+tools = true
+filesystem = true
+process = true

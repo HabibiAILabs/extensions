@@ -2,6 +2,17 @@ local MAX_CAUSAL_EVENTS = 20
 local MAX_SEMANTIC_EVENTS = 20
 local MINIMUM_SIMILARITY = 0.50
 local MAX_QUERY_BYTES = 16 * 1024
+local MAX_CONTEXT_BYTES = 96 * 1024
+
+local function append_bounded(items, value, budget)
+  local encoded = habibi.json.encode(value)
+  if #encoded > budget.remaining then
+    budget.truncated = true
+    return
+  end
+  table.insert(items, value)
+  budget.remaining = budget.remaining - #encoded
+end
 
 local function retrieve(trigger)
   local causal_newest_first = habibi.array({})
@@ -17,9 +28,10 @@ local function retrieve(trigger)
     event_id = event.causation_id
   end
 
+  local budget = { remaining = MAX_CONTEXT_BYTES, truncated = false }
   local causal = habibi.array({})
   for index = #causal_newest_first, 1, -1 do
-    table.insert(causal, causal_newest_first[index])
+    append_bounded(causal, causal_newest_first[index], budget)
   end
 
   local referenced = habibi.array({})
@@ -30,7 +42,7 @@ local function retrieve(trigger)
         local event = habibi.events.get(id)
         if event then
           seen[id] = true
-          table.insert(referenced, event)
+          append_bounded(referenced, event, budget)
         end
       end
     end
@@ -58,7 +70,7 @@ local function retrieve(trigger)
         local id = match.event.id
         if not seen[id] then
           seen[id] = true
-          table.insert(semantic, match)
+          append_bounded(semantic, match, budget)
         end
       end
     end
@@ -71,7 +83,8 @@ local function retrieve(trigger)
         causal = causal,
         referenced = referenced,
         semantic = semantic,
-        semantic_metadata = semantic_metadata
+        semantic_metadata = semantic_metadata,
+        truncated = budget.truncated
       }
     })
   }

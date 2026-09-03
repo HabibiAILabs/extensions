@@ -12,18 +12,18 @@
     {
       "id": "memory",
       "name": "Memory",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Adds causal and semantically related durable events to model context.",
       "source": "https://github.com/HabibiAILabs/extensions.git",
       "subdir": "memory"
     },
     {
-      "id": "process",
-      "name": "Process",
-      "version": "0.2.2",
-      "description": "Run globally approved native programs in bounded Linux sandboxes.",
+      "id": "essentials",
+      "name": "Essentials",
+      "version": "0.1.0",
+      "description": "Read, edit, find, grep, list, and run shell commands within global boundaries.",
       "source": "https://github.com/HabibiAILabs/extensions.git",
-      "subdir": "process"
+      "subdir": "essentials"
     },
     {
       "id": "git",
@@ -36,7 +36,7 @@
     {
       "id": "habibi-docs",
       "name": "Habibi",
-      "version": "0.1.4",
+      "version": "0.1.5",
       "description": "Searchable runtime and extension-development documentation.",
       "source": "https://github.com/HabibiAILabs/extensions.git",
       "subdir": "habibi-docs"
