@@ -43,7 +43,7 @@ habibi update web-search
 | Extension | Version | Description |
 | --- | ---: | --- |
 | [`chat`](chat/) | `0.3.7` | Event-streamed multi-session chat with explicit and automatic reply relationships. |
-| [`memory`](memory/) | `0.1.2` | Causal and semantic durable-event context retrieval. |
+| [`memory`](memory/) | `0.1.3` | Causal and semantic durable-event context retrieval. |
 | [`essentials`](essentials/) | `0.1.0` | Bounded read, edit, find, grep, list, and Bash tools. |
 | [`git`](git/) | `0.2.0` | Read-only repository inspection through sandboxed Git. |
 | [`habibi-docs`](habibi-docs/) | `0.1.5` | Searchable runtime and extension-development documentation. |
@@ -99,6 +99,7 @@ web-search-v0.1.7
 memory-v0.1.0
 memory-v0.1.1
 memory-v0.1.2
+memory-v0.1.3
 ```
 
 A repository commit may update several extensions independently. Installations remain reproducible because Habibi records both the extension version and exact Git commit.

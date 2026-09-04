@@ -60,7 +60,12 @@ local function render_section(lines, title, items)
   for _, item in ipairs(items) do
     local event = item.event or item
     table.insert(lines, "### " .. tostring(event.event_type or "Memory"))
-    render_fields(item, "", lines)
+    table.insert(lines, "- **Event ID:** " .. tostring(event.id))
+    table.insert(lines, "- **Occurred at:** " .. tostring(event.occurred_at))
+    if event.payload then
+      table.insert(lines, "- **Payload:**")
+      render_fields(event.payload, "  ", lines)
+    end
   end
 end
 
@@ -99,7 +104,6 @@ local function retrieve(trigger)
   end
 
   local semantic = habibi.array({})
-  local semantic_metadata = nil
   local stored_trigger = habibi.events.get(trigger.id)
   if stored_trigger then
     local query = trigger.event_type .. "\n" .. habibi.json.encode(trigger.payload)
@@ -111,11 +115,6 @@ local function retrieve(trigger)
       minimum_similarity = MINIMUM_SIMILARITY
     })
     if ok then
-      semantic_metadata = {
-        embedding_model = matches.embedding_model,
-        embedding_revision = matches.embedding_revision,
-        candidates_scanned = matches.candidates_scanned
-      }
       for _, match in ipairs(matches.matches) do
         local id = match.event.id
         if not seen[id] then
@@ -131,10 +130,6 @@ local function retrieve(trigger)
   render_section(lines, "Causal history", causal)
   render_section(lines, "Referenced results", referenced)
   render_section(lines, "Semantically related events", semantic)
-  if semantic_metadata then
-    table.insert(lines, "## Retrieval details")
-    render_fields(semantic_metadata, "", lines)
-  end
   if budget.truncated then
     table.insert(lines, "\n> Memory was truncated to fit the context budget.")
   end
