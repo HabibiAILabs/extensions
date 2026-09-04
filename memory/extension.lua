@@ -14,6 +14,56 @@ local function append_bounded(items, value, budget)
   budget.remaining = budget.remaining - #encoded
 end
 
+local function label(value)
+  return tostring(value):gsub("_", " "):gsub("^%l", string.upper)
+end
+
+local function scalar(value)
+  if value == nil then return "—" end
+  if type(value) == "boolean" then return value and "yes" or "no" end
+  return tostring(value):gsub("\n", "\n  ")
+end
+
+local function render_fields(value, indent, lines)
+  if type(value) ~= "table" then
+    table.insert(lines, indent .. scalar(value))
+    return
+  end
+  if #value > 0 then
+    for _, item in ipairs(value) do
+      if type(item) == "table" then
+        table.insert(lines, indent .. "-")
+        render_fields(item, indent .. "  ", lines)
+      else
+        table.insert(lines, indent .. "- " .. scalar(item))
+      end
+    end
+    return
+  end
+  local keys = {}
+  for key, _ in pairs(value) do table.insert(keys, key) end
+  table.sort(keys)
+  for _, key in ipairs(keys) do
+    local item = value[key]
+    if type(item) == "table" then
+      table.insert(lines, indent .. "- **" .. label(key) .. ":**")
+      render_fields(item, indent .. "  ", lines)
+    else
+      table.insert(lines, indent .. "- **" .. label(key) .. ":** " .. scalar(item))
+    end
+  end
+end
+
+local function render_section(lines, title, items)
+  if #items == 0 then return end
+  table.insert(lines, "## " .. title)
+  for _, item in ipairs(items) do
+    local event = item.event or item
+    table.insert(lines, "### " .. tostring(event.event_type or "Memory"))
+    render_fields(item, "", lines)
+  end
+end
+
 local function retrieve(trigger)
   local causal_newest_first = habibi.array({})
   local seen = {}
@@ -77,17 +127,18 @@ local function retrieve(trigger)
   end
 
   if #causal == 0 and #referenced == 0 and #semantic == 0 then return { content = "" } end
-  return {
-    content = habibi.json.encode({
-      memory = {
-        causal = causal,
-        referenced = referenced,
-        semantic = semantic,
-        semantic_metadata = semantic_metadata,
-        truncated = budget.truncated
-      }
-    })
-  }
+  local lines = { "# Retrieved memory" }
+  render_section(lines, "Causal history", causal)
+  render_section(lines, "Referenced results", referenced)
+  render_section(lines, "Semantically related events", semantic)
+  if semantic_metadata then
+    table.insert(lines, "## Retrieval details")
+    render_fields(semantic_metadata, "", lines)
+  end
+  if budget.truncated then
+    table.insert(lines, "\n> Memory was truncated to fit the context budget.")
+  end
+  return { content = table.concat(lines, "\n") }
 end
 
 habibi.context.register("retrieve", retrieve)

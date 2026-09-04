@@ -4,7 +4,7 @@
     {
       "id": "chat",
       "name": "Chat",
-      "version": "0.3.6",
+      "version": "0.3.7",
       "description": "Multi-session web chat with durable reply relationships and owned context.",
       "source": "https://github.com/HabibiAILabs/extensions.git",
       "subdir": "chat"
@@ -12,7 +12,7 @@
     {
       "id": "memory",
       "name": "Memory",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "description": "Adds causal and semantically related durable events to model context.",
       "source": "https://github.com/HabibiAILabs/extensions.git",
       "subdir": "memory"
@@ -44,7 +44,7 @@
     {
       "id": "soul",
       "name": "Soul",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "description": "A user-authored personality prompt with a local editor.",
       "source": "https://github.com/HabibiAILabs/extensions.git",
       "subdir": "soul"

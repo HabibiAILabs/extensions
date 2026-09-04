@@ -28,6 +28,6 @@ habibi.context.register("soul", function()
   local value = prompt()
   if value:match("^%s*$") then return { content = "" } end
   return {
-    content = "User-authored agent soul (identity, personality, and behavioral preferences):\n" .. value
+    content = "# Agent soul\n\nUser-authored identity, personality, and behavioral preferences:\n\n" .. value
   }
 end)

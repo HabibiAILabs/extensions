@@ -42,12 +42,12 @@ habibi update web-search
 
 | Extension | Version | Description |
 | --- | ---: | --- |
-| [`chat`](chat/) | `0.3.6` | Event-streamed multi-session chat with explicit and automatic reply relationships. |
-| [`memory`](memory/) | `0.1.1` | Causal and semantic durable-event context retrieval. |
+| [`chat`](chat/) | `0.3.7` | Event-streamed multi-session chat with explicit and automatic reply relationships. |
+| [`memory`](memory/) | `0.1.2` | Causal and semantic durable-event context retrieval. |
 | [`essentials`](essentials/) | `0.1.0` | Bounded read, edit, find, grep, list, and Bash tools. |
 | [`git`](git/) | `0.2.0` | Read-only repository inspection through sandboxed Git. |
 | [`habibi-docs`](habibi-docs/) | `0.1.5` | Searchable runtime and extension-development documentation. |
-| [`soul`](soul/) | `0.1.2` | User-authored agent personality with a local editor. |
+| [`soul`](soul/) | `0.1.3` | User-authored agent personality with a local editor. |
 | [`web-search`](web-search/) | `0.1.7` | Brave or self-hosted SearXNG public-web discovery. |
 
 ## Versioning and releases
@@ -69,6 +69,7 @@ chat-v0.3.3
 chat-v0.3.4
 chat-v0.3.5
 chat-v0.3.6
+chat-v0.3.7
 process-v0.1.0
 process-v0.1.1
 process-v0.2.0
@@ -86,6 +87,7 @@ habibi-docs-v0.1.5
 soul-v0.1.0
 soul-v0.1.1
 soul-v0.1.2
+soul-v0.1.3
 web-search-v0.1.0
 web-search-v0.1.1
 web-search-v0.1.2
@@ -96,6 +98,7 @@ web-search-v0.1.6
 web-search-v0.1.7
 memory-v0.1.0
 memory-v0.1.1
+memory-v0.1.2
 ```
 
 A repository commit may update several extensions independently. Installations remain reproducible because Habibi records both the extension version and exact Git commit.

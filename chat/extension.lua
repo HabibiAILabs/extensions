@@ -419,11 +419,12 @@ habibi.context.register("chat.session-history", function(trigger)
   local session_id = trigger.payload.session_id
   if not session_id then return { content = "" } end
   local messages = session_messages(session_id)
-  local lines = { "Chat session history:" }
+  local lines = { "# Chat session history" }
   local first = math.max(1, #messages - 40)
   for index = first, #messages do
     if messages[index].event_id ~= trigger.id then
-      table.insert(lines, string.format("%s: %s", messages[index].role, messages[index].content))
+      local role = messages[index].role == "assistant" and "Assistant" or "User"
+      table.insert(lines, string.format("\n**%s:** %s", role, messages[index].content))
     end
   end
   if #lines == 1 then return { content = "" } end
